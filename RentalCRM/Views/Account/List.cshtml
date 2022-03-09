@@ -1,0 +1,305 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Danh sách tài khoản";
+}
+
+<!--begin::Toolbar-->
+<div class="toolbar" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+            <!--begin::Title-->
+            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Danh sách tài khoản</h1>
+            <!--end::Title-->
+            <!--begin::Separator-->
+            <span class="h-20px border-gray-200 border-start mx-4"></span>
+            <!--end::Separator-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a asp-action="rentalcrmhome" asp-controller="rentalcrm" class="text-muted text-hover-primary">Trang chủ</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <li class="breadcrumb-item text-muted">
+                    <a href="#!" class="text-muted text-hover-primary">Tài khoản</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                </li>
+                <li class="breadcrumb-item text-muted">
+                    <a asp-action="list" asp-controller="account" class="text-muted text-hover-primary active">Danh sách tài khoản</a>
+                </li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+    <!--begin::Container-->
+    <div id="kt_content_container" class="container-fluid">
+        <div class="card mb-6 mb-xl-9">
+            <div class="card-header mt-6">
+                <div class="card-toolbar">
+                    <button class="btn btn-light-primary" id="btnAdd"><i class="fas fa-plus"></i> Thêm mới</button>
+                </div>
+            </div>
+            <div class="card-body pt-9 pb-0">
+                <div class="row g-5 g-xl-8">
+                    <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4 table-striped" id="tableData">
+                        <thead>
+                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                <th>#</th>
+                                <th>TÀI KHOẢN</th>
+                                <th>TÊN NGƯỜI DÙNG</th>
+                                <th>VAI TRÒ</th>
+                                <th>CHI NHÁNH</th>
+                                <th>SỐ ĐIỆN THOẠI</th>
+                                <th>TRẠNG THÁI</th>
+                                <th>HÌNH ĐẠI DIỆN</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="9" class="text-center"><span class="spinner-border text-primary" role="status"></span> Đang tải dữ liệu</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--end::Container-->
+</div>
+
+<div class="modal fade" id="modal-id" tabindex="-1" aria-modal="true" role="dialog">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Form-->
+            <form class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#" id="kt_modal_new_address_form">
+                <!--begin::Modal header-->
+                <div class="modal-header" id="kt_modal_new_address_header">
+                    <!--begin::Modal title-->
+                    <h2>Thêm mới tài khoản</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body py-10 px-lg-17">
+                    <!--begin::Scroll-->
+                    <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_new_address_header" data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px" style="max-height: 675px;">
+                       
+                        <!--begin::Input group-->
+                        <div class="row mb-5">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                <!--begin::Label-->
+                                <label class="required fs-5 fw-bold mb-2">Tên đăng nhập</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control form-control-solid" placeholder="" name="first-name">
+                                <!--end::Input-->
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                <!--end::Label-->
+                                <label class="required fs-5 fw-bold mb-2">Tên người dùng</label>
+                                <!--end::Label-->
+                                <!--end::Input-->
+                                <input type="text" class="form-control form-control-solid" placeholder="" name="last-name">
+                                <!--end::Input-->
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        
+                        <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-5 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="fs-5 fw-bold mb-2">Địa chỉ</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input class="form-control form-control-solid" placeholder="" name="city">
+                            <!--end::Input-->
+                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row g-9 mb-5">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                <!--begin::Label-->
+                                <label class="fs-5 fw-bold mb-2">Email</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input class="form-control form-control-solid" placeholder="" name="state">
+                                <!--end::Input-->
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                <!--begin::Label-->
+                                <label class="fs-5 fw-bold mb-2">Mật khẩu</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input class="form-control form-control-solid" placeholder="" name="postcode">
+                                <!--end::Input-->
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                    </div>
+                    <!--end::Scroll-->
+                </div>
+                <!--end::Modal body-->
+                <!--begin::Modal footer-->
+                <div class="modal-footer flex-center">
+                    <!--begin::Button-->
+                    <button type="reset" id="kt_modal_new_address_cancel" class="btn btn-light me-3">Discard</button>
+                    <!--end::Button-->
+                    <!--begin::Button-->
+                    <button type="submit" id="kt_modal_new_address_submit" class="btn btn-primary">
+                        <span class="indicator-label">Submit</span>
+                        <span class="indicator-progress">
+                            Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+                    <!--end::Button-->
+                </div>
+                <!--end::Modal footer-->
+                <div></div>
+            </form>
+            <!--end::Form-->
+        </div>
+    </div>
+</div>
+<!--end::Post-->
+<script type="text/javascript">
+    var dataSource = [];
+    var table;
+    $(document).ready(function () {
+        loadData();
+        $("#btnAdd").click(function () {
+            $("#modal-id").modal("show");
+        })
+    });
+
+    function loadData() {
+        $.ajax({
+            url: '@Url.Action("listaccount","account")',
+            type: "GET",
+            contentType: "application/json",
+            success: function (responseData) {
+                var data = responseData.data;
+                dataSource = data;
+                $("#tableData tbody").empty();
+                data.forEach(function (item, index) {
+                    var rowContent = "";
+                    rowContent += "<td style='text-align: center;'>" + (index + 1) + "</td>";
+                    rowContent += `<td>${item.username}</td>`;
+                    rowContent += `<td>${item.fullname}</td>`;
+                    rowContent += `<td>${item.roleName}</td>`;
+                    rowContent += `<td>${item.branchName}</td>`;
+                    rowContent += `<td>${item.phone}</td>`;
+                    rowContent += `<td>${item.statusName}</td>`;
+                    rowContent += `<td><img src="${item.photo}" style="width:50px;height:auto;"/></td>`;
+                    rowContent += `<td><a class="btn btn-icon btn-success me-1" onclick="editItem(${item.userId})"><i class="fas fa-edit"></i></a><a class="btn btn-icon btn-danger" onclick="deleteItem(${item.userId})"><i class="fas fa-trash"></i></a></td>`
+                    //rowContent += "<td style='text-align: center;'><a target='_blank' href='/orders/admin/list?accountId=" + item.id + "'><i class='fa fa-list fa-2x' style='color:#03a9f4'></i></a></td>";
+                    //rowContent += "<td style='text-align: center;'><a onclick='editItem(" + item.id + ")'><i class='fa fa-edit fa-2x' style='color:#03a9f4'></i></a></td>";
+                    //rowContent += "<td style='text-align: center;'><a onclick='deleteItem(" + item.id + ")'><i class='fa fa-trash fa-2x' style='color:#e91e63'></i></a></td>";
+
+                    var newRow = "<tr id='row" + item.userId + "' >" + rowContent + "</tr>";
+                    $(newRow).appendTo($("#tableData tbody"));
+
+                    // $("#tableData #dummyRow").after("<tr id='row"+item.id+"' >" + rowContent + "</tr>");
+                });
+                initTable();
+                ////Init datatable
+                //if (tableUpdating === 0) {
+                //    initTablePage();
+                //}
+
+                ////update data with foreign key
+                ////updateTable();
+                //formatNumber();
+            },
+            error: function (e) {
+                //console.log(e.message);
+                //initTablePage();
+            }
+        });
+    }
+
+    function initTable() {
+        table = $('#tableData').DataTable({
+            search:true,
+            aLengthMenu: [
+                [-1, 10, 25, 50, 100, 200],
+                ['Tất cả', 10, 25, 50, 100, 200]
+            ],
+            'order': [
+                [1, 'desc']
+            ]
+        });
+
+
+
+        table.on('order.dt search.dt', function () {
+            table.column(0, {
+                search: 'applied',
+                order: 'applied'
+            }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).draw();
+
+        //$('#tableData tfoot th:not(:last-child):not(:nth-last-child(2))').each(function () {
+        //    var title = $(this).text();
+        //    $(this).html("<input type='text' class='tableFooterFilter' placeholder=' ' />");
+        //});
+
+        //table.columns().every(function () {
+        //    var that = this;
+
+        //    $('input', this.footer()).on('keyup change', function () {
+        //        if (that.search() !== this.value) {
+        //            that
+        //                .search(this.value)
+        //                .draw();
+        //        }
+        //    });
+        //});
+    }
+</script>

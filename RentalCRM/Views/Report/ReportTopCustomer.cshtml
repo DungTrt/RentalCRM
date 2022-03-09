@@ -1,0 +1,391 @@
+﻿@{
+    ViewBag.Title = "Danh sách tài khoản";
+}
+
+<!--begin::Toolbar-->
+<div class="subheader py-2 py-lg-6 subheader-solid" id="kt_subheader">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <!--begin::Page Heading-->
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <!--begin::Page Title-->
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Trang chủ</h5>
+                <!--end::Page Title-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item text-muted">
+                        <a asp-controller="rentalcrm" asp-action="rentalcrmhome" class="text-muted">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item text-muted">
+                        <a href="#!" class="text-muted">Báo cáo</a>
+                    </li>
+                    <li class="breadcrumb-item text-muted active">
+                        <a href="#!" class="text-muted">Top khách hàng</a>
+                    </li>
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page Heading-->
+        </div>
+        <!--end::Info-->
+        <!--begin::Toolbar-->
+        <!--end::Toolbar-->
+    </div>
+</div>
+
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card card-custom gutter-b">
+                    <div class="card-header border-0 py-5">
+                        <h2 class="card-title">
+                            Top khách hàng
+                        </h2>
+                        <div class="card-toolbar">
+                            <input type="text" id="daterange1" placeholder="Chọn thời gian" class="form-control form-control-solid w-200px" readonly />
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pb-3">
+                        <div id="chart1">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card card-custom gutter-b">
+                    <div class="card-header border-0 py-5">
+                        <h2 class="card-title">
+                            Top sản phẩm
+                        </h2>
+                        <div class="card-toolbar">
+                            <input type="text" id="daterange2" placeholder="Chọn thời gian" class="form-control form-control-solid w-200px" readonly />
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pb-3">
+                        <div id="chart2">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card card-custom gutter-b">
+                    <div class="card-header border-0 py-5">
+                        <h2 class="card-title">
+                            Thống kê theo danh mục khách hàng
+                        </h2>
+                        <div class="card-toolbar">
+                            <input type="text" id="daterange3" placeholder="Chọn thời gian" class="form-control form-control-solid w-200px" readonly />
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pb-3">
+                        <div id="chart3" class="d-flex justify-content-center align-items-center">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="card card-custom gutter-b">
+                    <div class="card-header border-0 py-5">
+                        <h2 class="card-title">
+                            Thống kê theo danh mục sản phẩm
+                        </h2>
+                        <div class="card-toolbar">
+                            <input type="text" id="daterange4" placeholder="Chọn thời gian" class="form-control form-control-solid w-200px" readonly />
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pb-3">
+                        <div id="chart4" class="d-flex justify-content-center align-items-center">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!--end::Container-->
+</div>
+<script type="text/javascript">
+    var chart1,chart2,chart3;
+    $(function () {
+        $("#daterange1,#daterange2,#daterange3,#daterange4").daterangepicker({
+            buttonClasses: ' btn',
+            applyClass: 'btn-primary',
+            cancelClass: 'btn-secondary',
+            locale: {
+                format: 'YYYY/MM/DD'
+            },
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        });
+
+        //options for bar char
+        var options1 = {
+            series: [],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: false,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            noData: {
+                text: 'Đang tải dữ liệu...'
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val.toLocaleString('en-US') + " vnđ"
+                    }
+                }
+            }
+            
+        };
+        //options for pie char
+        var options2 = {
+            series: [],
+            chart: {
+                height: 300,
+                type: 'pie',
+            },
+            noData: {
+                text: 'Đang tải dữ liệu...'
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val, opts) {
+                        var seriesPercent = opts.globals.seriesPercent;
+                        var index = opts.seriesIndex;
+                        var percentage = parseFloat(seriesPercent[index]).toFixed(1);
+                        return val.toLocaleString('en-US') + " vnđ" + " (" + percentage + "%)";
+                    }
+                }
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        };
+        
+
+        chart1 = new ApexCharts(document.querySelector("#chart1"), options1);
+        chart1.render();
+
+        chart2 = new ApexCharts(document.querySelector("#chart2"), options1);
+        chart2.render();
+
+        chart3 = new ApexCharts(document.querySelector("#chart3"), options2);
+        chart3.render();
+
+        chart4 = new ApexCharts(document.querySelector("#chart4"), options2);
+        chart4.render();
+
+        loadData();
+        $("#daterange1").change(function () {
+            loadDataForTopCustomerChart();
+        })
+
+        $("#daterange2").change(function () {
+            loadDataForTopProductChart();
+        })
+        $("#daterange3").change(function () {
+            loadDataForRevenueByCustomerCategoryChart();
+        })
+        $("#daterange4").change(function () {
+            loadDataForRevenueByProductCategoryChart();
+        })
+    })
+    function loadData() {
+
+        loadDataForTopCustomerChart();
+        loadDataForTopProductChart();
+        loadDataForRevenueByCustomerCategoryChart();
+        loadDataForRevenueByProductCategoryChart();
+    }
+
+    function loadDataForTopCustomerChart() {
+
+        var rangeDate = $("#daterange1").val().split('-');
+        var startDate = rangeDate[0].trim();
+        var endDate = rangeDate[1].trim();
+
+        $.ajax({
+            url: '@Url.Action("reportbycustomer","order")',
+            type: "GET",
+            data: {
+                startDate: startDate,
+                endDate: endDate
+            },
+            contentType: "application/json",
+            success: function (response) {
+                var data = response.data;
+                data = data.map(function (item) {
+                    return { x: item.customerName, y: item.totalMoney }
+                });
+                //chart1.updateOptions({
+                //    title: {
+                //        text: "Top khách hàng",
+                //        align: "center"
+                //    }
+                //})
+                chart1.updateSeries([{
+                    name: "Tổng: ",
+                    data: data
+                }])
+            },
+            error: function () {
+                chart1.updateOptions({
+                    noData: {
+                        text: ''
+                    },
+                })
+            }
+
+        });
+    }
+
+    function loadDataForTopProductChart() {
+
+        var rangeDate = $("#daterange2").val().split('-');
+        var startDate = rangeDate[0].trim();
+        var endDate = rangeDate[1].trim();
+
+        $.ajax({
+            /*            url: '/don-hang/api/reportbyproduct',*/
+            url: '@Url.Action("reportbyproduct","order")',
+            type: "GET",
+            data: {
+                startDate: startDate,
+                endDate: endDate
+            },
+            contentType: "application/json",
+            success: function (response) {
+                var data = response.data;
+                data = data.map(function (item) {
+                    return { x: item.productName, y: item.totalMoney }
+                });
+               
+                chart2.updateSeries([{
+                    name: "Tổng: ",
+                    data: data
+                }])
+            },
+            error: function () {
+                chart2.updateOptions({
+                    noData: {
+                        text: ''
+                    },
+                })
+            }
+        });
+    }
+
+    function loadDataForRevenueByCustomerCategoryChart() {
+        var rangeDate = $("#daterange3").val().split('-');
+        var startDate = rangeDate[0].trim();
+        var endDate = rangeDate[1].trim();
+
+        
+
+        $.ajax({
+            /*            url: '/don-hang/api/reportbycustomercategory',*/
+            url: '@Url.Action("reportbycustomercategory","order")',
+            type: "GET",
+            data: {
+                startDate: startDate,
+                endDate: endDate
+            },
+            contentType: "application/json",
+            success: function (response) {
+                var dataSource = response.data;
+
+                var data = dataSource.map(function (item) {
+                    return item.totalMoney;
+                });
+                var cateName = dataSource.map(function (item) {
+                    return item.customerCategoryName;
+                });
+                chart3.updateOptions({
+                    series: data,
+                    labels: cateName
+                });
+                //chart3.updateSeries(data)
+            },
+            error: function () {
+                chart3.updateOptions({
+                    noData: {
+                        text: ''
+                    },
+                })
+            }
+        });
+    }
+
+    function loadDataForRevenueByProductCategoryChart() {
+        var rangeDate = $("#daterange4").val().split('-');
+        var startDate = rangeDate[0].trim();
+        var endDate = rangeDate[1].trim();
+
+
+
+        $.ajax({
+            /*            url: '/don-hang/api/reportbyproductcategory',*/
+            url: '@Url.Action("reportbyproductcategory","order")',
+            type: "GET",
+            data: {
+                startDate: startDate,
+                endDate: endDate
+            },
+            contentType: "application/json",
+            success: function (response) {
+                var dataSource = response.data;
+
+                var data = dataSource.map(function (item) {
+                    return item.totalMoney;
+                });
+                var cateName = dataSource.map(function (item) {
+                    return item.productCategoryName;
+                });
+                chart4.updateOptions({
+                    series: data,
+                    labels: cateName
+                });
+                //chart3.updateSeries(data)
+            },
+            error: function () {
+                chart4.updateOptions({
+                    noData: {
+                        text: ''
+                    },
+                })
+            }
+        });
+    }
+</script>

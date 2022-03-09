@@ -1,0 +1,494 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Danh sách tài khoản";
+}
+
+<!--begin::Toolbar-->
+<div class="subheader py-2 py-lg-6 subheader-solid" id="kt_subheader">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <!--begin::Page Heading-->
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <!--begin::Page Title-->
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Trang chủ</h5>
+                <!--end::Page Title-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item text-muted">
+                        <a asp-controller="rentalcrm" asp-action="rentalcrmhome" class="text-muted">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item text-muted">
+                        <a href="#!" class="text-muted">Khách hàng</a>
+                    </li>
+                    <li class="breadcrumb-item text-muted active">
+                        <a href="#!" class="text-muted">Danh sách khách hàng</a>
+                    </li>
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page Heading-->
+        </div>
+        <!--end::Info-->
+        <!--begin::Toolbar-->
+        <!--end::Toolbar-->
+    </div>
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container-fluid">
+        <div class="card card-custom gutter-b">
+            <div class="card-header border-0 py-5">
+                <div class="card-toolbar">
+                    <button class="btn btn-light-primary" id="btnAdd" onclick="editItem(0)"><i class="fas fa-plus"></i> Thêm mới</button>
+                </div>
+            </div>
+            <div class="card-body pt-0 pb-3">
+                <div class="table-responsive">
+                    <table class="table table-head-custom table-head-bg table-borderless table-vertical-center" id="tableData">
+                        <thead>
+                            <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0 bg-light">
+                                <th>#</th>
+                                <th>họ tên</th>
+                                @*<th>nhóm</th>*@
+                                <th>chi nhánh</th>
+                                <th>số CMND</th>
+                                <th>SỐ ĐIỆN THOẠI</th>
+                                @*<th>Email</th>
+                                    <th>Địa chỉ</th>*@
+                                <th>Trạng thái</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*<tr>
+                                    <td colspan="8" class="text-center"><span class="spinner-border text-primary" role="status" style="vertical-align:middle;"></span> Đang tải dữ liệu</td>
+                                </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--end::Container-->
+</div>
+
+<!-- Modal-->
+<div class="modal fade" id="modal-id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm mới khách hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="scroll scroll-pull" data-scroll="true" data-height="500">
+                    <form>
+                        <input hidden id="customerid" value="0" />
+                        <div class="form-group row">
+                            <div class="col-sm-8">
+                                <label class="col-form-label font-weight-bolder">Tên khách hàng</label>
+                                <input class="form-control form-control-solid" id="fullname" />
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="col-form-label font-weight-bolder">Số điện thoại</label>
+                                <input class="form-control form-control-solid" id="phone" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="col-form-label font-weight-bolder">Nhóm</label>
+                                <select class="form-control select2" id="cateid">
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="col-form-label font-weight-bolder">Chi nhánh</label>
+                                <select class="form-control select2" id="branchid">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-4">
+                                <label class="col-form-label font-weight-bolder">Số CMND</label>
+                                <input class="form-control form-control-solid" id="citizenid" />
+                            </div>
+                            <div class="col-sm-8">
+                                <label class="col-form-label font-weight-bolder">Email</label>
+                                <input class="form-control form-control-solid" id="email" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-form-label font-weight-bolder">Địa chỉ</label>
+                            <input class="form-control form-control-solid" id="address" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label font-weight-bolder">Mô tả</label>
+                            <textarea class="form-control form-control-solid" rows="5" id="description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox checkbox-primary col-form-label font-weight-bolder">
+                                <input type="checkbox" id="active" />
+                                <span></span>
+                                Kích hoạt ?
+                            </label>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" onclick="updateItem();">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Post-->
+<script type="text/javascript">
+    var dataSource = [],customerCategory=[],branch=[],rowIndex;
+    var table;
+    $(document).ready(function () {
+        loadData();
+        //initTable();
+        //$("#btnAdd").click(function () {
+        //    $("#modal-id").modal("show");
+        //})
+    });
+
+    function loadData() {
+
+        //block ui
+        KTApp.block('#tableData', {
+            overlayColor: '#000000',
+            state: 'primary',
+            message: 'Đang tải dữ liệu...'
+        });
+        //KTApp.blockPage({
+        //    overlayColor: '#000000',
+        //    state: 'primary',
+        //    message: 'Please wait...'
+        //});
+
+        //get list customer
+        $.ajax({
+            url: '@Url.Action("GetListCustomer", "customer")',
+            type: "GET",
+            contentType: "application/json",
+            success: function (responseData) {
+                var data = responseData.data;
+                dataSource = data;
+                $("#tableData tbody").remove();
+                //data.forEach(function (item, index) {
+                //    var rowContent = "";
+                //    rowContent += "<td style='text-align: center;'>" + (index + 1) + "</td>";
+                //    rowContent += `<td>${item.fullname}</td>`;
+                //    rowContent += `<td>${item.cateName}</td>`;
+                //    rowContent += `<td>${item.branchName}</td>`;
+                //    rowContent += `<td>${item.citizenId}</td>`;
+                //    rowContent += `<td>${item.phone}</td>`;
+                //    rowContent += `<td>${item.email}</td>`;
+                //    rowContent += `<td>${item.address}</td>`;
+                //    rowContent += `<td>${item.statusName}</td>`;
+                //    /*rowContent += `<td><img src="${item.photo}" style="width:50px;height:auto;"/></td>`;*/
+                //    rowContent += `<td><a class="btn btn-icon btn-success me-1" onclick="editItem(${item.customerId})"><i class="fas fa-edit"></i></a><a class="btn btn-icon btn-danger" onclick="deleteItem(${item.customerId})"><i class="fas fa-trash"></i></a></td>`
+                //    //rowContent += "<td style='text-align: center;'><a target='_blank' href='/orders/admin/list?accountId=" + item.id + "'><i class='fa fa-list fa-2x' style='color:#03a9f4'></i></a></td>";
+                //    //rowContent += "<td style='text-align: center;'><a onclick='editItem(" + item.id + ")'><i class='fa fa-edit fa-2x' style='color:#03a9f4'></i></a></td>";
+                //    //rowContent += "<td style='text-align: center;'><a onclick='deleteItem(" + item.id + ")'><i class='fa fa-trash fa-2x' style='color:#e91e63'></i></a></td>";
+
+                //    var newRow = "<tr id='row" + item.customerId + "' >" + rowContent + "</tr>";
+                //    $(newRow).appendTo($("#tableData tbody"));
+
+                //    // $("#tableData #dummyRow").after("<tr id='row"+item.id+"' >" + rowContent + "</tr>");
+                //});
+                initTable();
+                KTApp.unblock("#tableData");
+                ////Init datatable
+                //if (tableUpdating === 0) {
+                //    initTablePage();
+                //}
+
+                ////update data with foreign key
+                ////updateTable();
+                //formatNumber();
+            },
+            error: function (e) {
+                KTApp.unblock("#tableData");
+                //console.log(e.message);
+                //initTablePage();
+            }
+        });
+        //get list customercategory
+        $.ajax({
+            url: '@Url.Action("getlistcustomercategory","customer")',
+            type: 'get',
+            contentType: "application/json",
+            success: function (response) {
+                var data = response.data;
+                customerCategory = data.map(function (item) {
+                    return { "id": item.cateId, "text": item.cateName }
+                });
+                $("#cateid").select2({
+                    placeholder: "Chọn nhóm khách hàng",
+                    data: customerCategory
+                })
+            }
+
+        })
+        //get list branch
+        $.ajax({
+            url: '@Url.Action("listbranches","systemconfig")',
+            type: 'get',
+            contentType: "application/json",
+            success: function (response) {
+                var data = response.data;
+                branch = data.map(function (item) {
+                    return { "id": item.branchId, "text": item.branchName }
+                });
+                $("#branchid").select2({
+                    placeholder: "Chọn chi nhánh",
+                    data: branch
+                })
+            }
+
+        })
+
+    }
+
+    function initTable() {
+        table = $('#tableData').DataTable({
+            search: true,
+            //responsive: true,
+            //height:"50vh",
+            /*dom: '<"top"lf>rt<"bottom"ip><"clear">',*/
+            //searchDelay: 500,
+            //processing: true,
+            //serverSide: true,
+            @*ajax: {
+                url: '@Url.Action("GetListCustomer", "customer")',
+                type: "GET",
+            },*@
+            data: dataSource,
+            "createdRow": function (row, data, dataIndex) {
+                $(row).addClass('text-dark row' + data.customerId);
+            },
+            columns: [
+                { data: "customerId" },
+                { data: "fullname" },
+/*                { data: "cateName" },*/
+                { data: "branchName" },
+                { data: "citizenId" },
+                { data: "phone" },
+                //{ data: "email" },
+                //{ data: "address" },
+                { data: "statusName" },
+                { data: "customerId" },
+            ],
+            columnDefs: [
+                {
+                    targets: 1,
+                    render: function (data, type, full, meta) {
+                        return `<a href="#!" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">${data}</a>
+                                <span class="text-muted font-weight-bold d-block">${full.cateName}</span>`
+                    }
+                },
+                {
+                    targets: 6,
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return `<a class="btn btn-icon btn-light-success btn-hover-success btn-sm mr-1" onclick="editItem(${data})"><i class="fas fa-edit"></i></a><a class="btn btn-icon btn-light-danger btn-hover-danger btn-sm" onclick="removeItem(${data})"><i class="fas fa-trash"></i></a>`
+                    }
+                },
+                {
+                    targets: 0,
+                    className: "text-center text-dark-75 font-weight-bolder",
+                    orderable: false,
+                }
+            ]
+            //aLengthMenu: [
+            //    [-1, 10, 25, 50, 100, 200],
+            //    ['Tất cả', 10, 25, 50, 100, 200]
+            //],
+            //'order': [
+            //    [1, 'desc']
+            //]
+        });
+
+
+
+        table.on('order.dt search.dt', function () {
+            table.column(0, {
+                search: 'applied',
+                order: 'applied'
+            }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).draw();
+
+        table.on('click', 'tbody tr', function () {
+            rowIndex = table.row(this).index();
+        });
+
+        //$('#tableData tfoot th:not(:last-child):not(:nth-last-child(2))').each(function () {
+        //    var title = $(this).text();
+        //    $(this).html("<input type='text' class='tableFooterFilter' placeholder=' ' />");
+        //});
+
+        //table.columns().every(function () {
+        //    var that = this;
+
+        //    $('input', this.footer()).on('keyup change', function () {
+        //        if (that.search() !== this.value) {
+        //            that
+        //                .search(this.value)
+        //                .draw();
+        //        }
+        //    });
+        //});
+    }
+
+    function updateItem() {
+
+        var obj = {
+            customerId: $("#customerid").val(),
+            fullname: $("#fullname").val(),
+            cateId: $("#cateid").val(),
+            cateName: getCategory($("#cateid").val()).text,
+            phone: $("#phone").val(),
+            branchId: $("#branchid").val(),
+            branchName: getBranch($("#branchid").val()).text,
+            citizenId: $("#citizenid").val(),
+            email: $("#email").val(),
+            address: $("#address").val(),
+            description: $("#description").val(),
+            active: $("#active").is(":checked") ? 1 : 0,
+            statusName: $("#active").is(":checked")?"Còn hiệu lực":"Không còn hiệu lực"
+        }
+
+        $("#modal-id").modal("hide");
+        KTApp.blockPage({
+            overlayColor: '#000000',
+            state: 'primary',
+            message: 'Please wait...'
+        });
+        if ($("#customerid").val() == 0) {
+            obj.customerId = dataSource[dataSource.length - 1].customerId + 1;
+            dataSource.push(obj);
+            toastr.success("Add item successfully !");
+            //table.row.add([
+            //    obj.customerId,
+            //    `<a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">${obj.fullname}</a>
+            //                    <span class="text-muted font-weight-bold d-block">${obj.cateName}</span>`,
+            //    obj.branchName,
+            //    obj.citizenId,
+            //    obj.phone,
+            //    "Còn hiệu lực",
+            //    `<a class='btn btn-icon btn-light-success btn-sm'><i class="fas fa-edit" onclick='editItem(${obj.customerId})'></i></a>
+            //        <a class='btn btn-icon btn-light-danger btn-sm'><i class="fas fa-trash" onclick='removeItem(${obj.customerId})'></i></a>`
+            //]);
+            table.row.add(obj);
+            table.draw();
+        }
+        else {
+
+            toastr.success("Chỉnh sửa khách hàng thành công !");
+            var rowId = ".row" + $("#customerid").val() + " td";
+            $(rowId)[1].innerHTML = `<a href="#!" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">${obj.fullname}</a>
+                                <span class="text-muted font-weight-bold d-block">${obj.cateName}</span>`;
+            $(rowId)[2].innerText = obj.branchName;
+            $(rowId)[3].innerText = obj.citizenId;
+            $(rowId)[4].innerText = obj.phone;
+            $(rowId)[5].innerText = obj.statusName;
+
+            var customer = getCustomer(obj.customerId);
+            //customer.customerId = obj.customerId;
+            customer.fullname = obj.fullname;
+            customer.cateId = obj.cateId;
+            customer.cateName = obj.cateName;
+            customer.branchId = obj.branchId;
+            customer.branchName = obj.branchName;
+            customer.phone = obj.phone;
+            customer.citizenId = obj.citizenId;
+            customer.address = obj.address;
+            customer.description = obj.description;
+            customer.email = obj.email;
+            customer.active = obj.active;
+            customer.status = obj.statusName;
+
+        }
+        KTApp.unblockPage();
+    }
+
+    function editItem(customerId) {
+        var obj = getCustomer(customerId);
+        $("#customerid").val(customerId.toString());
+        $("#fullname").val(customerId==0?"":obj.fullname);
+        $("#cateid").val(customerId == 0 ? customerCategory[0].id : obj.cateId);
+        $("#cateid").change();
+        $("#branchid").val(customerId == 0 ? branch[0].id : obj.branchId);
+        $("#branchid").change();
+        $("#citizenid").val(customerId==0?"":obj.citizenId);
+        $("#address").val(customerId == 0 ? "" :obj.address);
+        $("#email").val(customerId == 0 ? "" :obj.email);
+        $("#phone").val(customerId == 0 ? "" :obj.phone);
+        $("#description").val(customerId == 0 ? "" : obj.description);
+        if (customerId == 0 || obj.active==0) {
+            $("#active").prop("checked",false);
+        }
+        else {
+            $("#active").prop("checked",true);
+        }
+        $(".modal-title").text(customerId == 0 ? "Thêm mới khách hàng" :obj.fullname.toUpperCase());
+        $("#modal-id").modal("show");
+
+
+    }
+
+    function removeItem(customerid) {
+        Swal.fire({
+            title: "Bạn có chắc chắc không?",
+            text: "Bạn sẽ không thể khôi phục lại dữ liệu!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Xoá!",
+            cancelButtonText: "Huỷ bỏ"
+        }).then(function (result) {
+            if (result.value) {
+                var rowId = ".row" + customerid;
+                $(rowId).hide(1000);
+                table.rows(rowIndex).remove().draw();
+                //table.fnDraw();
+                toastr.success("Xoá khách hàng thành công !");
+            }
+        });
+    }
+
+    function getCustomer(customerId) {
+        return dataSource.find(function (item) {
+            return item.customerId == customerId;
+        });
+    }
+
+    function getCategory(cateId) {
+        return customerCategory.find(function (item) {
+            return item.id == cateId;
+        });
+    }
+
+    function getBranch(branchId) {
+        return branch.find(function (item) {
+            return item.id == branchId;
+        });
+    }
+</script>

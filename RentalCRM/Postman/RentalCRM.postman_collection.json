@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "dac7ecde-8e77-426c-89b9-116ba5f78e12",
+		"name": "RentalCRM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "account",
+			"item": [
+				{
+					"name": "GetListAccount",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/account/api/list",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"account",
+								"api",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "GetListCustomer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/customer/api/getlistcustomer",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"customer",
+								"api",
+								"getlistcustomer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetListCustomerCategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/customer/api/getlistcustomercategory",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"customer",
+								"api",
+								"getlistcustomercategory"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "ReportRevenueByTime",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/order/api/reportrevenuebytime?startdate=2022-02-28&enddate=2022-02-01",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"order",
+								"api",
+								"reportrevenuebytime"
+							],
+							"query": [
+								{
+									"key": "startdate",
+									"value": "2022-02-28"
+								},
+								{
+									"key": "enddate",
+									"value": "2022-02-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ReportRevenueByBranch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/order/api/reportrevenuebybranch?startdate=2022-02-22&enddate=2022-02-28",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"order",
+								"api",
+								"reportrevenuebybranch"
+							],
+							"query": [
+								{
+									"key": "startdate",
+									"value": "2022-02-22"
+								},
+								{
+									"key": "enddate",
+									"value": "2022-02-28"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRecentOrder",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/order/api/getrecentorder",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"order",
+								"api",
+								"getrecentorder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ReportByCustomer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/order/api/reportbycustomer?startdate=2022-02-01&enddate=2022-02-28",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"order",
+								"api",
+								"reportbycustomer"
+							],
+							"query": [
+								{
+									"key": "startdate",
+									"value": "2022-02-01"
+								},
+								{
+									"key": "enddate",
+									"value": "2022-02-28"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ReportByProduct",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/order/api/reportbyproduct?startdate=2022-02-01&enddate=2022-02-28",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"order",
+								"api",
+								"reportbyproduct"
+							],
+							"query": [
+								{
+									"key": "startdate",
+									"value": "2022-02-01"
+								},
+								{
+									"key": "enddate",
+									"value": "2022-02-28"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ReportByCustomerCategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/order/api/reportbycustomercategory?startdate=2022-02-01&enddate=2022-02-28",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"order",
+								"api",
+								"reportbycustomercategory"
+							],
+							"query": [
+								{
+									"key": "startdate",
+									"value": "2022-02-01"
+								},
+								{
+									"key": "enddate",
+									"value": "2022-02-28"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ReportByProductCategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44311/order/api/reportbyproductcategory?startdate=2022-02-01&enddate=2022-02-28",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44311",
+							"path": [
+								"order",
+								"api",
+								"reportbyproductcategory"
+							],
+							"query": [
+								{
+									"key": "startdate",
+									"value": "2022-02-01"
+								},
+								{
+									"key": "enddate",
+									"value": "2022-02-28"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
