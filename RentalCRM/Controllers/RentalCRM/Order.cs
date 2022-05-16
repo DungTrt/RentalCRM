@@ -58,7 +58,7 @@ namespace RentalCRM.Controllers.RentalCRM
             return View();
         }
         [HttpGet]
-        [Route("api/reportbycustomer")]
+        [Route("order/api/reportbycustomer")]
         public async Task<IActionResult> ReportByCustomer(DateTime startDate, DateTime endDate)
         {
             try
@@ -81,7 +81,7 @@ namespace RentalCRM.Controllers.RentalCRM
         }
 
         [HttpGet]
-        [Route("api/reportbyproduct")]
+        [Route("order/api/reportbyproduct")]
         public async Task<IActionResult> ReportByProduct(DateTime startDate, DateTime endDate)
         {
             try
@@ -104,7 +104,7 @@ namespace RentalCRM.Controllers.RentalCRM
         }
 
         [HttpGet]
-        [Route("api/reportbycustomercategory")]
+        [Route("order/api/reportbycustomercategory")]
         public async Task<IActionResult> ReportByCustomerCategory(DateTime startDate, DateTime endDate)
         {
             try
@@ -127,7 +127,7 @@ namespace RentalCRM.Controllers.RentalCRM
         }
 
         [HttpGet]
-        [Route("api/reportbyproductcategory")]
+        [Route("order/api/reportbyproductcategory")]
         public async Task<IActionResult> ReportByProductCategory(DateTime startDate, DateTime endDate)
         {
             try
@@ -150,7 +150,7 @@ namespace RentalCRM.Controllers.RentalCRM
         }
 
         [HttpGet]
-        [Route("api/reportrevenuebytime")]
+        [Route("order/api/reportrevenuebytime")]
         public async Task<IActionResult> ReportRevenueByTime(DateTime startDate, DateTime endDate)
         {
             try
@@ -173,7 +173,7 @@ namespace RentalCRM.Controllers.RentalCRM
         }
 
         [HttpGet]
-        [Route("api/getrecentorder")]
+        [Route("orderapi/getrecentorder")]
         public async Task<IActionResult> GetRecentOrder(DateTime startDate, DateTime endDate)
         {
             try
@@ -196,7 +196,7 @@ namespace RentalCRM.Controllers.RentalCRM
         }
 
         [HttpGet]
-        [Route("api/reportrevenuebybranch")]
+        [Route("order/api/reportrevenuebybranch")]
         public async Task<IActionResult> ReportRevenueByBranch(DateTime startDate, DateTime endDate)
         {
             try

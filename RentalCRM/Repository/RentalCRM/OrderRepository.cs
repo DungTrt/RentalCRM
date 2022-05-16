@@ -70,6 +70,12 @@ namespace RentalCRM.Repository.RentalCRM
             .ToListAsync();
         }
 
+        public async Task<List<ReportRevenueByBranchViewModel>> ReportByBranch()
+        {
+            return null;
+                     
+        }
+
         public async Task<List<ReportByCustomerViewModel>> ReportByCustomer(DateTime startDate, DateTime endDate)
         {
             var report = db.Orders.AsEnumerable()
@@ -78,7 +84,7 @@ namespace RentalCRM.Repository.RentalCRM
                 .Join(db.Customer, rp => rp.Key, customer => customer.CustomerId, (rp, customer) => new ReportByCustomerViewModel
                 {
                     CustomerId = rp.Key,
-                    TotalMoney = (int)rp.Sum(s => s.FinalPrice),
+                    TotalMoney = (double)rp.Sum(s => s.FinalPrice),
                     CustomerName = customer.Fullname
                 })
                 .OrderByDescending(o => o.TotalMoney)
@@ -101,7 +107,7 @@ namespace RentalCRM.Repository.RentalCRM
                         .Select(n => new ReportByCustomerCategoryViewModel
                         {
                             CustomerCategoryName = n.Key,
-                            TotalMoney = (int)n.Sum(s => s.FinalPrice)
+                            TotalMoney = (double)n.Sum(s => s.FinalPrice)
                         });
             return data.ToList();
         }
@@ -134,7 +140,7 @@ namespace RentalCRM.Repository.RentalCRM
                       .Select(n => new ReportByProductViewModel
                       {
                           ProductName = n.Key,
-                          TotalMoney = (int)n.Sum(s => s.FinalPrice)
+                          TotalMoney = (double)n.Sum(s => s.FinalPrice)
                       })
                       .OrderByDescending(o => o.TotalMoney)
                       .Take(20);
@@ -158,7 +164,7 @@ namespace RentalCRM.Repository.RentalCRM
                       .Select(n => new ReportByProductCategoryViewModel
                       {
                           ProductCategoryName = n.Key,
-                          TotalMoney = (int)n.Sum(s => s.FinalPrice)
+                          TotalMoney = (double)n.Sum(s => s.FinalPrice)
                       })
                       .OrderByDescending(o => o.TotalMoney)
                       .Take(5);
@@ -167,7 +173,7 @@ namespace RentalCRM.Repository.RentalCRM
 
         public async Task<List<ReportRevenueByBranchViewModel>> ReportRevenueByBranch(DateTime startDate, DateTime endDate)
         {
-            var data = (from order in db.Orders.AsEnumerable()
+            var data = (from order in db.Orders
                         from branch in db.Branch
                         where order.BranchId == branch.BranchId && order.ReturnDate >= startDate && order.ReturnDate <= endDate
                         select new OrderViewModel
@@ -177,6 +183,7 @@ namespace RentalCRM.Repository.RentalCRM
                             BranchName = branch.BranchName,
                             ReturnDate = order.ReturnDate
                         })
+                        .ToList()
                      .GroupBy(o => o.BranchName)
                      .Select(n => new ReportRevenueByBranchViewModel
                      {
@@ -185,7 +192,7 @@ namespace RentalCRM.Repository.RentalCRM
                          {
                              Category = nn.Key.Value.ToString("dd/MM"),
                              Date = nn.Key.Value,
-                             TotalMoney = (int)nn.Sum(s => s.FinalPrice)
+                             TotalMoney = (double)nn.Sum(s => s.FinalPrice)
                          }).ToList()
 
                      })
@@ -237,7 +244,7 @@ namespace RentalCRM.Repository.RentalCRM
                  {
                      CategoryName = n.Key.ToString("dd/MM"),
                      Date = n.Key,
-                     TotalMoney = (int)n.Sum(s => s.FinalPrice)
+                     TotalMoney = (double)n.Sum(s => s.FinalPrice)
                  })
                  .ToList();
             while (startDate <= endDate)

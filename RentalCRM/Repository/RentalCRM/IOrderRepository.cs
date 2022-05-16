@@ -16,5 +16,6 @@ namespace RentalCRM.Repository
         Task<List<ReportByProductCategoryViewModel>> ReportByProductCategory(DateTime startDate, DateTime endDate);
         Task<List<ReportRevenueByTimeViewModel>> ReportRevenueByTime(DateTime startDate, DateTime endDate);
         Task<List<ReportRevenueByBranchViewModel>> ReportRevenueByBranch(DateTime startDate, DateTime endDate);
+        Task<List<ReportRevenueByBranchViewModel>> ReportByBranch();
     }
 }

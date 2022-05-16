@@ -28,6 +28,7 @@ namespace RentalCRM
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddCors();
             services.AddDbContext<RentalCRMContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("RentalCRMConnection"));
             });
@@ -54,7 +55,12 @@ namespace RentalCRM
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
             app.UseRouting();
 
             app.UseAuthorization();

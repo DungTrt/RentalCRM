@@ -8,7 +8,7 @@ namespace RentalCRM.ViewModel
     {
         public string CategoryName { get; set; }
         public DateTime Date { get; set; }
-        public int TotalMoney { get; set; }
+        public double TotalMoney { get; set; }
 
     }
 

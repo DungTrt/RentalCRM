@@ -4,8 +4,8 @@ namespace RentalCRM.ViewModel
 {
     public class CustomerViewModel
     {
-        public int CustomerId { get; set; }
-        public int CateId { get; set; }
+        public int? CustomerId { get; set; }
+        public int? CateId { get; set; }
         public string CateName { get; set; }
         public string Fullname { get; set; }
         public string Phone { get; set; }
@@ -19,5 +19,7 @@ namespace RentalCRM.ViewModel
         public string Photo { get; set; }
         public int? BranchId { get; set; }
         public string BranchName { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

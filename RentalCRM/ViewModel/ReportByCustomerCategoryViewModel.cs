@@ -4,6 +4,6 @@
     {
         public int CustomerCategoryId { get; set; }
         public string CustomerCategoryName { get; set; }
-        public int TotalMoney { get; set; }
+        public double TotalMoney { get; set; }
     }
 }
